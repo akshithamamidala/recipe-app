@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { API_BASE } from "../config";   // ✅ Import API base URL
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showError, setShowError] = useState(false);
-
   const Email = email.toLowerCase();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,11 +18,14 @@ const Login = () => {
     }
 
     try {
-      let response = await fetch('${API_BASE}/login', {   // ✅ Use API_BASE
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: Email, password }),
-      });
+      let response = await fetch(
+        "http://localhost:5000/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: Email, password }),
+        }
+      );
 
       response = await response.json();
 
@@ -40,13 +40,13 @@ const Login = () => {
         toast.error(response.error);
       }
     } catch (error) {
-      console.error("An error occurred while logging in user:", error);
+      console.error("An error occurred while registering user:", error);
     }
   };
 
   return (
     <div className="SignupContainer">
-      <form onSubmit={handleSubmit}>
+      <form action="" onSubmit={(e) => handleSubmit(e)}>
         <h2>Login</h2>
 
         <input
@@ -55,7 +55,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="password"   // ✅ Changed from text to password
+          type="text"
           placeholder="Enter Your password"
           onChange={(e) => setPassword(e.target.value)}
         />
