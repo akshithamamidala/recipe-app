@@ -19,7 +19,7 @@ const UpdatePassword = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(${API_BASE}/forgotpassword, {  // ✅ Use API_BASE
+      const response = await fetch('${API_BASE}/forgotpassword', {  // ✅ Use API_BASE
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
