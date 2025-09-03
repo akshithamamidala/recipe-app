@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../styles/Addrecipe.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+import "react-toastify/dist/ReactToastify.css"; 
+import { API_BASE } from "../config";   // ✅ Import API base URL
 
 const AddRecipe = () => {
   const [recipe, setRecipe] = useState({
@@ -40,7 +41,6 @@ const AddRecipe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send a POST request to add the recipe to the server
 
     const nonEmptyIngredients = recipe.ingredients.filter(
       (ingredient) => ingredient.trim() !== ""
@@ -52,29 +52,24 @@ const AddRecipe = () => {
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/auth/recipe",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(recipe),
-        }
-      );
+      const response = await fetch(${API_BASE}/recipe, {   // ✅ Use API_BASE here
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recipe),
+      });
 
       if (response.ok) {
-        // Recipe added successfully, you can show a success message or redirect to another page
         toast.success("Recipe added successfully");
-
         setTimeout(() => {
           window.location.href = "/recipes";
         }, 4000);
       } else {
-        toast.error("Failed to add recipe:", response.status);
+        toast.error("Failed to add recipe");
       }
     } catch (error) {
-      toast.error("An error occurred while adding the recipe:", error);
+      toast.error("An error occurred while adding the recipe");
     }
   };
 
