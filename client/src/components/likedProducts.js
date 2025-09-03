@@ -1,4 +1,3 @@
-import { API_BASE } from "../config";
 import React, { useState, useEffect } from "react";
 import "../styles/likedProducts.css";
 import { toast, ToastContainer } from "react-toastify";
