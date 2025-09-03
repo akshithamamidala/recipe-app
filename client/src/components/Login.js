@@ -21,7 +21,7 @@ const Login = () => {
     }
 
     try {
-      let response = await fetch(${API_BASE}/login, {   // ✅ Use API_BASE
+      let response = await fetch('${API_BASE}/login', {   // ✅ Use API_BASE
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: Email, password }),
