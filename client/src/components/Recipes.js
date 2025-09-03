@@ -14,7 +14,7 @@ const Recipes = () => {
   }, []);
 
   const getRecipes = () => {
-    fetch(${API_BASE}/recipe, {
+    fetch('${API_BASE}/recipe', {
       method: "GET",
       headers: {
         Authorization: ${localStorage.getItem("token")},
@@ -37,7 +37,7 @@ const Recipes = () => {
   const handleDeleteRecipe = async (recipeId) => {
     try {
       if (window.confirm("Are you sure you want to delete this recipe?")) {
-        const response = await fetch(${API_BASE}/recipe/${recipeId}, {
+        const response = await fetch('${API_BASE}/recipe/${recipeId}', {
           method: "DELETE",
         });
 
@@ -61,7 +61,7 @@ const Recipes = () => {
 
   const handleAddToFavorites = async (recipeId) => {
     try {
-      const response = await fetch(${API_BASE}/likedRecipes/${recipeId}, {
+      const response = await fetch('${API_BASE}/likedRecipes/${recipeId}', {
         method: "POST",
       });
 
@@ -87,7 +87,7 @@ const Recipes = () => {
     try {
       if (e.target.value) {
         let Searchedrecipes = await fetch(
-          ${API_BASE}/searchRecipes/${e.target.value},
+          '${API_BASE}/searchRecipes/${e.target.value}',
           {
             method: "GET",
             headers: {
