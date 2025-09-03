@@ -1,29 +1,25 @@
+import { API_BASE } from "../config";
 import React, { useState, useEffect } from "react";
 import "../styles/likedProducts.css";
 import { toast, ToastContainer } from "react-toastify";
+import { API_BASE } from "../config";
 
 const LikedProducts = () => {
   const [likedProducts, setLikedProducts] = useState([]);
 
   useEffect(() => {
-    // Call the async function to fetch liked products when the component mounts
     fetchLikedProducts();
   }, []);
 
   const fetchLikedProducts = async () => {
     try {
-      // Make a GET request to the /api/liked-products endpoint
-      const response = await fetch(
-        "http://localhost:5000/auth/likedRecipes"
-      );
+      const response = await fetch(${API_BASE}/likedRecipes);
 
       if (!response.ok) {
         toast.error("Failed to fetch liked products");
       }
 
       const data = await response.json();
-
-      // Set the fetched data to the state
       setLikedProducts(data);
     } catch (error) {
       toast.error("Error fetching liked products:", error);
@@ -37,12 +33,9 @@ const LikedProducts = () => {
           "Are you sure you wanna remove this recipe from favourites??"
         )
       ) {
-        const response = await fetch(
-          `http://localhost:5000/auth/removeLiked/${recipeId}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(${API_BASE}/removeLiked/${recipeId}, {
+          method: "DELETE",
+        });
 
         if (response.ok) {
           toast.success("Item Removed successfully");
@@ -108,3 +101,4 @@ const LikedProducts = () => {
 };
 
 export default LikedProducts;
+     
