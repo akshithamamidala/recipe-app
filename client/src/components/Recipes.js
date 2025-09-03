@@ -17,7 +17,7 @@ const Recipes = () => {
     fetch('${API_BASE}/recipe', {
       method: "GET",
       headers: {
-        Authorization: ${localStorage.getItem("token")},
+        Authorization: '${localStorage.getItem("token")}',
       },
     })
       .then((response) => {
