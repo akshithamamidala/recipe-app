@@ -1,31 +1,33 @@
 import React, { useState } from "react";
 import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { API_BASE } from "../config"; // ✅ import centralized API
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showError, setShowError] = useState(false);
-
+  const [showError, setShowError] = useState(false); // State to control the error message visibility
   const Email = email.toLowerCase();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password || !name) {
+      // If any of the fields are empty, show the error message
       setShowError(true);
-      return;
+      return; // Prevent further execution
     }
 
     try {
-      const response = await fetch('${API_BASE}/register', {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email: Email, password }),
-      });
+     const response = await fetch(
+  "http://localhost:5000/auth/register",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email: Email, password }),
+  }
+);
+
 
       if (response.ok) {
         const user = await response.json();
@@ -35,24 +37,23 @@ const Register = () => {
         } else {
           toast.success("Registration successful.");
           localStorage.setItem("token", user.token);
-
           setTimeout(() => {
             window.location.href = "/";
           }, 4000);
         }
       } else {
         console.error("Failed to register user:", response.status);
-        toast.error("Failed to register user");
       }
     } catch (error) {
       console.error("Registration error:", error);
-      toast.error('An error occurred: ${error.message}');
+      toast.error(`An error occurred: ${error.message}`);
+
     }
   };
 
   return (
     <div className="SignupContainer">
-      <form onSubmit={handleSubmit}>
+      <form action="" onSubmit={(e) => handleSubmit(e)}>
         <h2>SignUp</h2>
         <input
           type="text"
@@ -71,7 +72,6 @@ const Register = () => {
         />
         <button type="submit">Submit</button>
       </form>
-
       {showError && (
         <span className="fill-fields-error">Please Fill all the fields</span>
       )}
