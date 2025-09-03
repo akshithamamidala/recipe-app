@@ -3,7 +3,8 @@ import "../styles/RecipeStyle.css";
 import { Link } from "react-router-dom";
 import "../styles/Searchbar.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+import "react-toastify/dist/ReactToastify.css";
+import { API_BASE } from "../config"; // ✅ Import base URL
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -13,10 +14,10 @@ const Recipes = () => {
   }, []);
 
   const getRecipes = () => {
-    fetch("http://localhost:5000/auth/recipe", {
+    fetch(${API_BASE}/recipe, {
       method: "GET",
       headers: {
-        Authorization: `${localStorage.getItem("token")}`,
+        Authorization: ${localStorage.getItem("token")},
       },
     })
       .then((response) => {
@@ -35,19 +36,13 @@ const Recipes = () => {
 
   const handleDeleteRecipe = async (recipeId) => {
     try {
-      // Confirm the deletion with the user
       if (window.confirm("Are you sure you want to delete this recipe?")) {
-        // Send a DELETE request to the server
-        const response = await fetch(
-          `http://localhost:5000/auth/recipe/${recipeId}`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(${API_BASE}/recipe/${recipeId}, {
+          method: "DELETE",
+        });
 
         if (response.ok) {
           toast.success("Recipe deleted successfully");
-
           setTimeout(() => {
             window.location = "/recipes";
           }, 4000);
@@ -57,8 +52,7 @@ const Recipes = () => {
         }
       }
     } catch (error) {
-      toast.error("An error occurred while deleting the recipe:", error);
-
+      toast.error("An error occurred while deleting the recipe");
       setTimeout(() => {
         window.location.href = "/recipes";
       }, 3000);
@@ -67,17 +61,12 @@ const Recipes = () => {
 
   const handleAddToFavorites = async (recipeId) => {
     try {
-      // Send a POST request to the LikedList controller
-      const response = await fetch(
-        `http://localhost:5000/auth/likedRecipes/${recipeId}`,
-        {
-          method: "POST",
-        }
-      );
+      const response = await fetch(${API_BASE}/likedRecipes/${recipeId}, {
+        method: "POST",
+      });
 
       if (response.ok) {
         toast.success("Recipe added to favorites successfully");
-
         setTimeout(() => {
           window.location.href = "/favouriteRecipes";
         }, 4000);
@@ -98,7 +87,7 @@ const Recipes = () => {
     try {
       if (e.target.value) {
         let Searchedrecipes = await fetch(
-          `http://localhost:5000/auth/searchRecipes/${e.target.value}`,
+          ${API_BASE}/searchRecipes/${e.target.value},
           {
             method: "GET",
             headers: {
