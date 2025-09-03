@@ -52,7 +52,7 @@ const AddRecipe = () => {
     }
 
     try {
-      const response = await fetch(${API_BASE}/recipe, {   // ✅ Use API_BASE here
+      const response = await fetch('${API_BASE}/recipe', {   // ✅ Use API_BASE here
         method: "POST",
         headers: {
           "Content-Type": "application/json",
