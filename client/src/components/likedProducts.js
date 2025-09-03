@@ -13,7 +13,7 @@ const LikedProducts = () => {
 
   const fetchLikedProducts = async () => {
     try {
-      const response = await fetch(${API_BASE}/likedRecipes);
+      const response = await fetch('${API_BASE}/likedRecipes');
 
       if (!response.ok) {
         toast.error("Failed to fetch liked products");
@@ -33,7 +33,7 @@ const LikedProducts = () => {
           "Are you sure you wanna remove this recipe from favourites??"
         )
       ) {
-        const response = await fetch(${API_BASE}/removeLiked/${recipeId}, {
+        const response = await fetch('${API_BASE}/removeLiked/${recipeId}', {
           method: "DELETE",
         });
 
